@@ -6,9 +6,9 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Modelos basicos
 
-# ================================
-# Modelo para gestionar paises ===
-# ================================
+# =================================
+# Modelo para gestionar paises ====
+# =================================
 
 class Pais(models.Model):
     """
