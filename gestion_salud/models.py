@@ -19,7 +19,7 @@ class Pais(models.Model):
     o el país asociado a otros registros (por ejemplo, pacientes).
     """
     id_pais = models.AutoField(primary_key=True)
-    pais_name = models.CharField(max_length=200, verbose_name="Nombre del pais")
+    pais_nombre = models.CharField(max_length=200, verbose_name="Nombre del pais")
 
     class Meta:
         verbose_name = "Pais"
