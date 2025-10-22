@@ -11,7 +11,7 @@ class Pais(models.Model):
     class Meta:
         verbose_name = "Pais"
         verbose_name_plural = "Paises"
-        ordering = ['pais_nombre']
+        ordering = ['pais_name']
         db_table = 'pais'
 
     def __str__(self):
@@ -59,8 +59,17 @@ class ComunidadEtnica(models.Model):
 
 class Etnia(models.Model):
     """Modelo para gestionar etnias"""
+    ETNIAS = [
+        ('01','Indigena'),
+        ('02','Rom(Gitano)'),
+        ('03', 'Raizal(San Andres y providencia)'),
+        ('04', 'Palenquero de san basilio de palenque'),
+        ('05', 'Negro'),
+        ('06', 'Afrodecendiente'),
+        ('99', 'Ninguno')
+    ]
     id_etnia = models.AutoField(primary_key=True)
-    etnia = models.CharField(max_length=2, verbose_name="Codigo de la etnia")
+    etnia = models.CharField(max_length=2, choices=ETNIAS, verbose_name="Codigo de la etnia")
 
     class Meta:
         verbose_name = "Etnia"
@@ -116,7 +125,7 @@ class Discapacidad(models.Model):
 
 class VoluntadAnticipada(models.Model):
     """Modelo para gestionar voluntades anticipadas"""
-    ESTADOS_CHOICES = [
+    ESTADOS = [
         ('ACTIVA', 'Activa'),
         ('REVOCADA', 'Revocada'),
         ('MODIFICADA', 'Modificada'),
@@ -134,7 +143,7 @@ class VoluntadAnticipada(models.Model):
     fecha_revocacion = models.DateTimeField(blank=True, null=True,
                                             verbose_name="Fecha de revocación")
     contenido_documento = models.CharField(max_length=500, verbose_name="Contenido del documento")
-    estado_voluntad = models.CharField(max_length=10, choices=ESTADOS_CHOICES,
+    estado_voluntad = models.CharField(max_length=10, choices=ESTADOS,
                                        default='ACTIVA', verbose_name="Estado de la voluntad")
     firma_paciente = models.CharField(max_length=100, verbose_name="Firma del paciente")
 
@@ -178,12 +187,24 @@ class OposicionDonacion(models.Model):
 
 class Paciente(models.Model):
     """Modelo principal para gestionar información de pacientes"""
-    TIPO_DOCUMENTO_CHOICES = [
+    TIPO_DOCUMENTO = [
         ('CC', 'Cédula de Ciudadanía'),
         ('TI', 'Tarjeta de Identidad'),
         ('CE', 'Cédula de Extranjería'),
         ('PA', 'Pasaporte'),
         ('RC', 'Registro Civil'),
+        ('CN', 'Certificado de Nacido Vivo'),
+        ('CD', 'Carné Diplomático'),
+        ('SC', 'Salvoconducto de Permanencia'),
+        ('PR', 'Pasaporte de la ONU'),
+        ('PE', 'Permiso Especial de Permanencia'),
+        ('AS', 'Adulto Sin Identificación'),
+        ('MS', 'Menor Sin Identificación'),
+        ('PT', 'Permiso por Protección Temporal'),
+        ('DE', 'Documento Extranjero'),
+        ('SI', 'Sin Identificación'),
+        ('NV', 'Certificado Nacido Vivo'),
+        ('NI', 'NIT'),
     ]
 
     SEXO_BIOLOGICO_CHOICES = [
@@ -221,7 +242,7 @@ class Paciente(models.Model):
                                                  verbose_name="Discapacidades")
 
     # Datos personales
-    tipo_documento = models.CharField(max_length=5, choices=TIPO_DOCUMENTO_CHOICES,
+    tipo_documento = models.CharField(max_length=5, choices=TIPO_DOCUMENTO,
                                       verbose_name="Tipo de documento")
     numero_documento = models.CharField(max_length=15, unique=True,
                                         verbose_name="Número de documento")
@@ -372,7 +393,7 @@ class CausaMotivo(models.Model):
 
 class ServicioSalud(models.Model):
     """Modelo para gestionar servicios de salud prestados"""
-    ESTADO_CONSULTA_CHOICES = [
+    ESTADO_CONSULTA = [
         ('PROGRAMADA', 'Programada'),
         ('ATENDIDA', 'Atendida'),
         ('CANCELADA', 'Cancelada'),
@@ -403,7 +424,7 @@ class ServicioSalud(models.Model):
     diagnostico = models.CharField(max_length=500, verbose_name="Diagnóstico")
     diagnostico_egreso = models.CharField(max_length=500, blank=True, null=True,
                                           verbose_name="Diagnóstico de egreso")
-    estado_consulta = models.CharField(max_length=100, choices=ESTADO_CONSULTA_CHOICES,
+    estado_consulta = models.CharField(max_length=100, choices=ESTADO_CONSULTA,
                                        default='PROGRAMADA', verbose_name="Estado de la consulta")
 
     class Meta:
