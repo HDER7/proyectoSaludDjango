@@ -6,7 +6,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 class Pais(models.Model):
     """Modelo para gestionar paises"""
     id_pais = models.AutoField(primary_key=True)
-    pais_name = models.CharField(max_length=200, verbose_name="Nombre del pais")
+    pais_nombre = models.CharField(max_length=200, verbose_name="Nombre del pais")
 
     class Meta:
         verbose_name = "Pais"
