@@ -1,1 +1,8 @@
 django.core.management
+
+mysqlclient
+
+python-dotenv
+
+django-jazzmin
+pillow
