@@ -19,12 +19,12 @@ class Pais(models.Model):
     o el país asociado a otros registros (por ejemplo, pacientes).
     """
     id_pais = models.AutoField(primary_key=True)
-    pais_nombre = models.CharField(max_length=200, verbose_name="Nombre del pais")
+    pais_name = models.CharField(max_length=200, verbose_name="Nombre del pais")
 
     class Meta:
         verbose_name = "Pais"
         verbose_name_plural = "Paises"
-        ordering = ['pais_nombre']
+        ordering = ['pais_name']
         db_table = 'pais'
 
     def __str__(self):
