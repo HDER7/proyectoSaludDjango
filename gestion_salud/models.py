@@ -195,8 +195,20 @@ class Discapacidad(models.Model):
 
     Se usa como catálogo para registrar discapacidades relacionadas a pacientes.
     """
+
+    CATEGORIAS_DISCAPACIDAD = [
+        ('01', 'Física'),
+        ('02', 'Auditiva'),
+        ('03', 'Visual'),
+        ('04', 'Sordoceguera'),
+        ('05', 'Intelectual'),
+        ('06', 'Psicosocial (mental)'),
+        ('07', 'Múltiple'),
+        ('08', 'Ninguna')
+    ]
+
     id_discapacidad = models.AutoField(primary_key=True)
-    cod_categoria_discapacidad = models.CharField(max_length=50, verbose_name="Código de categoría")
+    cod_categoria_discapacidad = models.CharField(max_length=2, choices=CATEGORIAS_DISCAPACIDAD,verbose_name="Código de categoría")
     nombre_discapacidad = models.CharField(max_length=200, verbose_name="Nombre de la discapacidad")
     observaciones = models.CharField(max_length=200, blank=True, null=True, verbose_name="Observaciones")
     grado = models.CharField(max_length=50, blank=True, null=True, verbose_name="Grado")
@@ -553,6 +565,7 @@ class CatalogoEnfermedadesHuerfanas(models.Model):
     Permite marcar si un diagnóstico corresponde a una enfermedad rara
     en servicios clínicos.
     """
+
     id_huerfana = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=200, verbose_name="Nombre")
     tipo = models.CharField(max_length=2, verbose_name="Tipo")
@@ -580,8 +593,21 @@ class ViaIngreso(models.Model):
     - codigo_ingreso: clave primaria.
     - nombre_ingreso: descripción de la vía de ingreso.
     """
+    VIAS_INGRESO = [
+        ('01', 'Demanda Espontánea'),
+        ('02', 'Derivado de Consulta Externa'),
+        ('03', 'Derivado de Urgencias'),
+        ('04', 'Derivado de Hospitalización'),
+        ('05', 'Derivado de Cirugía'),
+        ('06', 'Referencia'),
+        ('07', 'Contrarreferencia'),
+        ('08', 'Recién Nacido en la Institución'),
+        ('09', 'Remitido'),
+        ('10', 'Derivado de Telemedicina'),
+        ('11', 'Derivado de Jornada de Salud'),
+    ]
     codigo_ingreso = models.AutoField(primary_key=True)
-    nombre_ingreso = models.CharField(max_length=50, verbose_name="Nombre del ingreso")
+    nombre_ingreso = models.CharField(max_length=2, choices=VIAS_INGRESO,verbose_name="Vía de ingreso")
 
     class Meta:
         verbose_name = "Vía de Ingreso"
@@ -605,8 +631,34 @@ class CausaMotivo(models.Model):
     - codigo_motivo: clave primaria.
     - nombre_motivo: descripción del motivo.
     """
+    CAUSAS = [
+        ('10', 'Enfermedad de origen común'),
+        ('11', 'Accidente de tránsito'),
+        ('12', 'Evento de origen laboral'),
+        ('13', 'Accidente en el hogar'),
+        ('14', 'Otro tipo de accidente'),
+        ('15', 'Evento catastrófico de origen natural'),
+        ('16', 'Lesión por agresión'),
+        ('17', 'Lesión auto infligida'),
+        ('18', 'Sospecha de violencia física'),
+        ('19', 'Sospecha de violencia psicológica'),
+        ('20', 'Sospecha de violencia sexual'),
+        ('21', 'Sospecha de negligencia y abandono'),
+        ('22', 'IVE relacionado con peligro a la salud o vida de la mujer'),
+        ('23', 'IVE por malformación congénita incompatible con la vida'),
+        ('24', 'IVE por violencia sexual, incesto o inseminación no consentida'),
+        ('25', 'Evento adverso en salud'),
+        ('26', 'Enfermedad general'),
+        ('27', 'Enfermedad laboral'),
+        ('28', 'Promoción y mantenimiento de la salud'),
+        ('29', 'Eventos catastróficos'),
+        ('30', 'Accidente de mina antipersonal - MAP'),
+        ('31', 'Accidente de Artefacto Explosivo Improvisado - AEI'),
+        ('32', 'Accidente de Munición Sin Explotar - MUSE'),
+        ('33', 'Otra víctima de conflicto armado colombiano'),
+    ]
     codigo_motivo = models.AutoField(primary_key=True)
-    nombre_motivo = models.CharField(max_length=50, verbose_name="Nombre del motivo")
+    nombre_motivo = models.CharField(max_length=2, choices=CAUSAS,verbose_name="Causa/Motivo")
 
     class Meta:
         verbose_name = "Causa/Motivo"
