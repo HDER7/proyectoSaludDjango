@@ -2,6 +2,8 @@ from django.apps import AppConfig
 from django.db.utils import OperationalError
 from django.core.exceptions import ObjectDoesNotExist
 
+from django.contrib.auth import get_user_model
+
 class GestionSaludConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'gestion_salud'
@@ -14,6 +16,10 @@ class GestionSaludConfig(AppConfig):
         )
 
         try:
+            # ======================================================
+            # Poblar tablas con datos iniciales ====================
+            # ======================================================
+
             # Países
             if Pais.objects.count() == 0:
                 Pais.objects.bulk_create([
@@ -96,6 +102,19 @@ class GestionSaludConfig(AppConfig):
                     CIE10(nombre='Diabetes mellitus tipo 2', tipo='E11'),
                     CIE10(nombre='Hipertensión esencial', tipo='I10'),
                 ])
+
+            # ======================================================
+            # Crear usuario administrador por defecto ==============
+            # ======================================================
+
+            User = get_user_model()
+
+            if not User.objects.filter(username='admin').exists():
+                User.objects.create_superuser(
+                    username='admin',
+                    email='admin@saludyvida.local',
+                    password='admin123'
+                )
 
         except (OperationalError, ObjectDoesNotExist):
             pass  # Evita errores si la base de datos aún no está migrada
