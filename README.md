@@ -41,11 +41,11 @@ Este sistema permite gestionar la historia clínica electrónica de pacientes co
     ```bash
    python manage.py cargar_datos_iniciales
 
-6. Ejecuta, esto nos carga los datos base del modelo catalogo, y los que tenemos    en el apps.py
+6. Ejecuta el proyecto
 
     python manage.py runserver
 
 7. Datos del admin por defecto para ingresar:
     username='admin',
     email='admin@gmail.com',
-    password='admin123'
+    password='admin'
