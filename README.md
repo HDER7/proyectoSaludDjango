@@ -36,11 +36,16 @@ Este sistema permite gestionar la historia clínica electrónica de pacientes co
     python manage.py makemigrations
     python manage.py migrate
 
-5. Ejecuta, esto nos carga los datos base del modelo catalogo, y los que tenemos    en el apps.py
+5. Cargar los datos iniciales
+    Una vez que las tablas existan, ejecuta el comando personalizado:
+    ```bash
+   python manage.py cargar_datos_iniciales
+
+6. Ejecuta, esto nos carga los datos base del modelo catalogo, y los que tenemos    en el apps.py
 
     python manage.py runserver
 
-6. Datos del admin por defecto para ingresar:
+7. Datos del admin por defecto para ingresar:
     username='admin',
     email='admin@gmail.com',
     password='admin123'
