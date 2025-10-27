@@ -129,25 +129,24 @@ class GestionSaludConfig(AppConfig):
                     CIE10(nombre='Fiebre tifoidea', tipo='01'),
                     CIE10(nombre='Enteritis debida a Salmonella', tipo='02'),
                     CIE10(nombre='Shigelosis debida a Shigella dysenteriae', tipo='30'),
-                    '''
-                    CIE10(nombre='Shigelosis debida a Shigella flexneri', tipo='A031'),
-                    CIE10(nombre='Shigelosis debida a Shigella boydii', tipo='A032'),
-                    CIE10(nombre='Shigelosis debida a Shigella sonnei', tipo='A033'),
-                    CIE10(nombre='Infección debida a Escherichia coli enteropatógena', tipo='A040'),
-                    CIE10(nombre='Tuberculosis pulmonar, confirmada bacteriológicamente', tipo='A150'),
-                    CIE10(nombre='Tuberculosis pulmonar, no confirmada bacteriológicamente', tipo='A151'),
-                    CIE10(nombre='Tuberculosis de otros órganos respiratorios', tipo='A152'),
-                    CIE10(nombre='Tuberculosis miliar', tipo='A159'),
-                    CIE10(nombre='Varicela sin complicaciones', tipo='B01'),
-                    CIE10(nombre='Sarampión sin complicaciones', tipo='B05'),
-                    CIE10(nombre='Rubeola sin complicaciones', tipo='B06'),
-                    CIE10(nombre='Hepatitis viral aguda tipo A', tipo='B15'),
-                    CIE10(nombre='Hepatitis viral aguda tipo B', tipo='B16'),
-                    CIE10(nombre='Hepatitis viral aguda tipo C', tipo='B17'),
-                    CIE10(nombre='Hepatitis viral crónica tipo B', tipo='B18'),
-                    CIE10(nombre='Hepatitis viral crónica tipo C', tipo='B182'),
-                    CIE10(nombre='VIH con infección sintomática', tipo='B20')
-                    '''
+                    # Sin comillas triples
+                    CIE10(nombre='Shigelosis debida a Shigella flexneri', tipo='31'),
+                    CIE10(nombre='Shigelosis debida a Shigella boydii', tipo='32'),
+                    CIE10(nombre='Shigelosis debida a Shigella sonnei', tipo='33'),
+                    CIE10(nombre='Infección debida a Escherichia coli enteropatógena', tipo='40'),
+                    CIE10(nombre='Tuberculosis pulmonar, confirmada bacteriológicamente', tipo='50'),
+                    CIE10(nombre='Tuberculosis pulmonar, no confirmada bacteriológicamente', tipo='51'),
+                    CIE10(nombre='Tuberculosis de otros órganos respiratorios', tipo='52'),
+                    CIE10(nombre='Tuberculosis miliar', tipo='59'),
+                    CIE10(nombre='Varicela sin complicaciones', tipo='01'),
+                    CIE10(nombre='Sarampión sin complicaciones', tipo='05'),
+                    CIE10(nombre='Rubeola sin complicaciones', tipo='06'),
+                    CIE10(nombre='Hepatitis viral aguda tipo A', tipo='15'),
+                    CIE10(nombre='Hepatitis viral aguda tipo B', tipo='16'),
+                    CIE10(nombre='Hepatitis viral aguda tipo C', tipo='17'),
+                    CIE10(nombre='Hepatitis viral crónica tipo B', tipo='18'),
+                    CIE10(nombre='Hepatitis viral crónica tipo C', tipo='82'),
+                    CIE10(nombre='VIH con infección sintomática', tipo='20')
                 ])
 
             # ======================================================
@@ -160,7 +159,7 @@ class GestionSaludConfig(AppConfig):
                 User.objects.create_superuser(
                     username='admin',
                     email='admin@gmail.com',
-                    password='admin123'
+                    password='admin'
                 )
 
             print("Ejecutando carga automática de datos...")
