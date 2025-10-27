@@ -85,6 +85,7 @@ class GestionSaludConfig(AppConfig):
                 ViaIngreso.objects.bulk_create([
                     ViaIngreso(nombre_ingreso='01'),
                     ViaIngreso(nombre_ingreso='02'),
+                    ViaIngreso(nombre_ingreso='03'),
                 ])
 
             # Causas/Motivos
@@ -123,11 +124,12 @@ class GestionSaludConfig(AppConfig):
             # Diagnósticos CIE-10
             if CIE10.objects.count() == 0:
                 CIE10.objects.bulk_create([
-                    CIE10(nombre='Diabetes mellitus tipo 2', tipo='E11'),
-                    CIE10(nombre='Hipertensión esencial', tipo='I10'),
-                    CIE10(nombre='Fiebre tifoidea', tipo='A01'),
-                    CIE10(nombre='Enteritis debida a Salmonella', tipo='A02'),
-                    CIE10(nombre='Shigelosis debida a Shigella dysenteriae', tipo='A030'),
+                    CIE10(nombre='Diabetes mellitus tipo 2', tipo='11'),
+                    CIE10(nombre='Hipertensión esencial', tipo='10'),
+                    CIE10(nombre='Fiebre tifoidea', tipo='01'),
+                    CIE10(nombre='Enteritis debida a Salmonella', tipo='02'),
+                    CIE10(nombre='Shigelosis debida a Shigella dysenteriae', tipo='30'),
+                    '''
                     CIE10(nombre='Shigelosis debida a Shigella flexneri', tipo='A031'),
                     CIE10(nombre='Shigelosis debida a Shigella boydii', tipo='A032'),
                     CIE10(nombre='Shigelosis debida a Shigella sonnei', tipo='A033'),
@@ -144,7 +146,8 @@ class GestionSaludConfig(AppConfig):
                     CIE10(nombre='Hepatitis viral aguda tipo C', tipo='B17'),
                     CIE10(nombre='Hepatitis viral crónica tipo B', tipo='B18'),
                     CIE10(nombre='Hepatitis viral crónica tipo C', tipo='B182'),
-                    CIE10(nombre='VIH con infección sintomática', tipo='B20'),
+                    CIE10(nombre='VIH con infección sintomática', tipo='B20')
+                    '''
                 ])
 
             # ======================================================
@@ -160,5 +163,7 @@ class GestionSaludConfig(AppConfig):
                     password='admin123'
                 )
 
+            print("Ejecutando carga automática de datos...")
+
         except (OperationalError, ObjectDoesNotExist):
-            pass  # Evita errores si la base de datos aún no está migrada
+            print("ERROR, NO EJECUTA LA CARGA AUTOMÁTICA DE DATOS")  # Evita errores si la base de datos aún no está migrada
