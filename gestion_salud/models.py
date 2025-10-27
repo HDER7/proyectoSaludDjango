@@ -657,8 +657,9 @@ class CausaMotivo(models.Model):
         ('32', 'Accidente de Munición Sin Explotar - MUSE'),
         ('33', 'Otra víctima de conflicto armado colombiano'),
     ]
+
     codigo_motivo = models.AutoField(primary_key=True)
-    nombre_motivo = models.CharField(max_length=2, choices=CAUSAS,verbose_name="Causa/Motivo")
+    nombre_motivo = models.CharField(max_length=2, choices=CAUSAS, verbose_name="Causa/Motivo")
 
     class Meta:
         verbose_name = "Causa/Motivo"
