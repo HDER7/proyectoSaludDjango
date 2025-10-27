@@ -15,7 +15,7 @@ Este sistema permite gestionar la historia clínica electrónica de pacientes co
 1. Clona el repositorio:
    ```bash
    git clone https://tu-repo.git
-   cd salud_y_vida
+   cd salud
 
 2. Instala las dependencias:
     pip install -r requirements.txt
