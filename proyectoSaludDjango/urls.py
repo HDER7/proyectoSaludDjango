@@ -1,22 +1,24 @@
-"""
-URL configuration for proyectoSaludDjango project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
+from gestion_salud import views
 from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
+    # Admin
     path('admin/', admin.site.urls),
+
+    # Página de inicio
+    path('', views.index, name='index'),
+
+    # URLs para Pacientes
+    path('pacientes/', views.paciente_listar, name='paciente_listar'),
+    path('pacientes/crear/', views.paciente_crear, name='paciente_crear'),
+    path('pacientes/<int:pk>/actualizar/', views.paciente_actualizar, name='paciente_actualizar'),
+    path('pacientes/<int:pk>/eliminar/', views.paciente_eliminar, name='paciente_eliminar'),
+
+    # URLs para Servicios de Salud
+    path('servicios/', views.servicio_listar, name='servicio_listar'),
+    path('servicios/crear/', views.servicio_crear, name='servicio_crear'),
+    path('servicios/<int:pk>/actualizar/', views.servicio_actualizar, name='servicio_actualizar'),
+    path('servicios/<int:pk>/eliminar/', views.servicio_eliminar, name='servicio_eliminar'),
 ]
+

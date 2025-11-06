@@ -362,7 +362,8 @@ class Paciente(models.Model):
 
     # Relaciones con catálogos
     id_nacionalidad = models.ForeignKey('PacienteNacionalidad', on_delete=models.PROTECT,
-                                        related_name='pacientes', verbose_name="Nacionalidad")
+                                        related_name='pacientes', verbose_name="Nacionalidad",
+                                        blank=True, null=True)
     id_voluntad_anticipada = models.ForeignKey(VoluntadAnticipada, on_delete=models.SET_NULL,
                                                blank=True, null=True,
                                                verbose_name="Voluntad anticipada")
