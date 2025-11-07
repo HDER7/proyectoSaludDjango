@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Paciente - Sistema de Gestión de Salud{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="bi bi-exclamation-triangle text-danger"></i> Eliminar Paciente</h1>
+            <a href="{% url 'paciente_listar' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Volver
+            </a>
+        </div>
+
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0"><i class="bi bi-exclamation-circle"></i> Confirmación de Eliminación</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-danger">
+                    <strong>Advertencia:</strong> Esta acción no se puede deshacer. Se eliminará permanentemente el registro del paciente y todos los datos asociados.
+                </div>
+
+                <h6 class="mb-3">¿Está seguro de que desea eliminar este paciente?</h6>
+
+                <!-- Información del Paciente -->
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <dl class="row mb-0">
+                            <dt class="col-sm-4">Nombre Completo:</dt>
+                            <dd class="col-sm-8">{{ paciente.primer_nombre }} {{ paciente.segundo_nombre }} {{ paciente.primer_apellido }} {{ paciente.segundo_apellido }}</dd>
+
+                            <dt class="col-sm-4">Tipo de Documento:</dt>
+                            <dd class="col-sm-8">{{ paciente.get_tipo_documento_display }}</dd>
+
+                            <dt class="col-sm-4">Número de Documento:</dt>
+                            <dd class="col-sm-8">{{ paciente.numero_documento }}</dd>
+
+                            <dt class="col-sm-4">Fecha de Nacimiento:</dt>
+                            <dd class="col-sm-8">{{ paciente.fecha_nacimiento|date:"d/m/Y" }}</dd>
+
+                            <dt class="col-sm-4">Edad:</dt>
+                            <dd class="col-sm-8">{{ paciente.edad }} años</dd>
+
+                            <dt class="col-sm-4">Sexo:</dt>
+                            <dd class="col-sm-8">{{ paciente.get_sexo_biologico_display }}</dd>
+
+                            <dt class="col-sm-4">Ciudad:</dt>
+                            <dd class="col-sm-8">{{ paciente.codigo_municipio.nombre }}</dd>
+
+                            <dt class="col-sm-4">Prestadora de Salud:</dt>
+                            <dd class="col-sm-8">{{ paciente.id_prestadora.nombre_prestadora }}</dd>
+
+                            <dt class="col-sm-4">Fecha de Registro:</dt>
+                            <dd class="col-sm-8 mb-0">{{ paciente.fecha_creacion|date:"d/m/Y H:i" }}</dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <form method="post" class="mt-4">
+                    {% csrf_token %}
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="{% url 'paciente_listar' %}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Sí, Eliminar Paciente
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

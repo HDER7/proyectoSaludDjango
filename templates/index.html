@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - Sistema de Gestión de Salud{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="bi bi-hospital"></i> Sistema de Gestión de Salud
+        </h1>
+        <p class="lead">Bienvenido al sistema de gestión integral de pacientes y servicios de salud</p>
+    </div>
+</div>
+
+<!-- Estadísticas -->
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="card-title">Total de Pacientes</h5>
+                        <h2 class="mb-0">{{ total_pacientes }}</h2>
+                    </div>
+                    <i class="bi bi-people" style="font-size: 3rem; opacity: 0.5;"></i>
+                </div>
+                <a href="{% url 'paciente_listar' %}" class="btn btn-light mt-3">
+                    Ver Pacientes <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="card-title">Total de Servicios</h5>
+                        <h2 class="mb-0">{{ total_servicios }}</h2>
+                    </div>
+                    <i class="bi bi-clipboard2-pulse" style="font-size: 3rem; opacity: 0.5;"></i>
+                </div>
+                <a href="{% url 'servicio_listar' %}" class="btn btn-light mt-3">
+                    Ver Servicios <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Acciones Rápidas -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-light">
+                <h5 class="mb-0"><i class="bi bi-lightning"></i> Acciones Rápidas</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <a href="{% url 'paciente_crear' %}" class="btn btn-outline-primary w-100 py-3">
+                            <i class="bi bi-person-plus-fill d-block mb-2" style="font-size: 2rem;"></i>
+                            Registrar Paciente
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="{% url 'servicio_crear' %}" class="btn btn-outline-success w-100 py-3">
+                            <i class="bi bi-plus-circle-fill d-block mb-2" style="font-size: 2rem;"></i>
+                            Nuevo Servicio
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="{% url 'paciente_listar' %}" class="btn btn-outline-info w-100 py-3">
+                            <i class="bi bi-search d-block mb-2" style="font-size: 2rem;"></i>
+                            Buscar Paciente
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="/admin/" class="btn btn-outline-secondary w-100 py-3">
+                            <i class="bi bi-gear-fill d-block mb-2" style="font-size: 2rem;"></i>
+                            Administración
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Servicios Recientes -->
+{% if servicios_recientes %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-light">
+                <h5 class="mb-0"><i class="bi bi-clock-history"></i> Servicios Recientes</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Paciente</th>
+                                <th>Tipo de Servicio</th>
+                                <th>Prestadora</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for servicio in servicios_recientes %}
+                            <tr>
+                                <td>{{ servicio.id_paciente }}</td>
+                                <td>{{ servicio.tipo_servicio }}</td>
+                                <td>{{ servicio.id_prestadora.nombre_prestadora }}</td>
+                                <td>{{ servicio.fecha_ingreso|date:"d/m/Y H:i" }}</td>
+                                <td>
+                                    <span class="badge bg-{% if servicio.estado_consulta == 'ATENDIDA' %}success{% elif servicio.estado_consulta == 'PROGRAMADA' %}info{% else %}secondary{% endif %}">
+                                        {{ servicio.get_estado_consulta_display }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

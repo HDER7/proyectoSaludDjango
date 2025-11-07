@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block title %}Actualizar Paciente - Sistema de Gestión de Salud{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="bi bi-pencil-square"></i> Actualizar Paciente</h1>
+            <a href="{% url 'paciente_listar' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Volver
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- Datos de Identificación -->
+                    <h5 class="border-bottom pb-2 mb-3">Datos de Identificación</h5>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Tipo de Documento *</label>
+                            <select name="tipo_documento" class="form-select" required>
+                                <option value="CC" {% if paciente.tipo_documento == 'CC' %}selected{% endif %}>Cédula de Ciudadanía</option>
+                                <option value="TI" {% if paciente.tipo_documento == 'TI' %}selected{% endif %}>Tarjeta de Identidad</option>
+                                <option value="CE" {% if paciente.tipo_documento == 'CE' %}selected{% endif %}>Cédula de Extranjería</option>
+                                <option value="PA" {% if paciente.tipo_documento == 'PA' %}selected{% endif %}>Pasaporte</option>
+                                <option value="RC" {% if paciente.tipo_documento == 'RC' %}selected{% endif %}>Registro Civil</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Número de Documento *</label>
+                            <input type="text" name="numero_documento" class="form-control" value="{{ paciente.numero_documento }}" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Edad *</label>
+                            <input type="number" name="edad" class="form-control" value="{{ paciente.edad }}" min="0" max="150" required>
+                        </div>
+                    </div>
+
+                    <!-- Datos Personales -->
+                    <h5 class="border-bottom pb-2 mb-3 mt-4">Datos Personales</h5>
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label class="form-label">Primer Nombre *</label>
+                            <input type="text" name="primer_nombre" class="form-control" value="{{ paciente.primer_nombre }}" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Segundo Nombre</label>
+                            <input type="text" name="segundo_nombre" class="form-control" value="{{ paciente.segundo_nombre|default:'' }}">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Primer Apellido *</label>
+                            <input type="text" name="primer_apellido" class="form-control" value="{{ paciente.primer_apellido }}" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Segundo Apellido</label>
+                            <input type="text" name="segundo_apellido" class="form-control" value="{{ paciente.segundo_apellido|default:'' }}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Fecha de Nacimiento *</label>
+                            <input type="date" name="fecha_nacimiento" class="form-control" value="{{ paciente.fecha_nacimiento|date:'Y-m-d' }}" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Sexo Biológico *</label>
+                            <select name="sexo_biologico" class="form-select" required>
+                                <option value="M" {% if paciente.sexo_biologico == 'M' %}selected{% endif %}>Masculino</option>
+                                <option value="F" {% if paciente.sexo_biologico == 'F' %}selected{% endif %}>Femenino</option>
+                                <option value="I" {% if paciente.sexo_biologico == 'I' %}selected{% endif %}>Intersexual</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Identidad de Género</label>
+                            <input type="text" name="identidad_genero" class="form-control" value="{{ paciente.identidad_genero|default:'' }}">
+                        </div>
+                    </div>
+
+                    <!-- Datos de Ubicación y Origen -->
+                    <h5 class="border-bottom pb-2 mb-3 mt-4">Ubicación y Origen</h5>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">País *</label>
+                            <select name="id_paciente_pais" class="form-select" required>
+                                {% for pais in paises %}
+                                <option value="{{ pais.id_pais }}" {% if pais.id_pais == paciente.id_paciente_pais.id_pais %}selected{% endif %}>{{ pais.pais_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Ciudad/Municipio *</label>
+                            <select name="codigo_municipio" class="form-select" required>
+                                {% for ciudad in ciudades %}
+                                <option value="{{ ciudad.codigo_municipio }}" {% if ciudad.codigo_municipio == paciente.codigo_municipio.codigo_municipio %}selected{% endif %}>{{ ciudad.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Nacionalidad *</label>
+                            <select name="id_nacionalidad" class="form-select" required>
+                                {% for pais in paises %}
+                                <option value="{{ pais.id_pais }}" {% if pais.id_pais == paciente.id_nacionalidad.id_paciente_nacionalidad %}selected{% endif %}>{{ pais.pais_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Etnia *</label>
+                            <select name="id_etnia" class="form-select" required>
+                                {% for etnia in etnias %}
+                                <option value="{{ etnia.id_etnia }}" {% if etnia.id_etnia == paciente.id_etnia.id_etnia %}selected{% endif %}>{{ etnia.etnia }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Comunidad Étnica *</label>
+                            <select name="id_comunidad" class="form-select" required>
+                                {% for comunidad in comunidades %}
+                                <option value="{{ comunidad.id_comunidad }}" {% if comunidad.id_comunidad == paciente.id_comunidad.id_comunidad %}selected{% endif %}>{{ comunidad.comunidad }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Datos Laborales y de Salud -->
+                    <h5 class="border-bottom pb-2 mb-3 mt-4">Datos Laborales y de Salud</h5>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Ocupación (CIUO) *</label>
+                            <select name="codigo_CIUO" class="form-select" required>
+                                {% for ocupacion in ocupaciones %}
+                                <option value="{{ ocupacion.codigo_CIUO }}" {% if ocupacion.codigo_CIUO == paciente.codigo_CIUO.codigo_CIUO %}selected{% endif %}>{{ ocupacion.nombre_ocupacion }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Prestadora de Salud *</label>
+                            <select name="id_prestadora" class="form-select" required>
+                                {% for prestadora in prestadoras %}
+                                <option value="{{ prestadora.id_prestadora }}" {% if prestadora.id_prestadora == paciente.id_prestadora.id_prestadora %}selected{% endif %}>{{ prestadora.nombre_prestadora }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a href="{% url 'paciente_listar' %}" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save"></i> Actualizar Paciente
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

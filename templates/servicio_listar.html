@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Servicios de Salud - Sistema de Gestión de Salud{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="bi bi-clipboard2-pulse"></i> Servicios de Salud</h1>
+            <a href="{% url 'servicio_crear' %}" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Nuevo Servicio
+            </a>
+        </div>
+
+        <!-- Búsqueda -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <form method="get" class="row g-3">
+                    <div class="col-md-10">
+                        <input type="text" name="q" class="form-control" placeholder="Buscar por paciente, documento o tipo de servicio..." value="{{ query }}">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-search"></i> Buscar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Lista de Servicios -->
+        <div class="card">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Lista de Servicios ({{ servicios|length }})</h5>
+            </div>
+            <div class="card-body">
+                {% if servicios %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Paciente</th>
+                                <th>Tipo de Servicio</th>
+                                <th>Prestadora</th>
+                                <th>Fecha Ingreso</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for servicio in servicios %}
+                            <tr>
+                                <td><small>{{ servicio.id_encuentro_paciente }}</small></td>
+                                <td>
+                                    <strong>{{ servicio.id_paciente.primer_nombre }} {{ servicio.id_paciente.primer_apellido }}</strong><br>
+                                    <small class="text-muted">{{ servicio.id_paciente.numero_documento }}</small>
+                                </td>
+                                <td>{{ servicio.tipo_servicio }}</td>
+                                <td>{{ servicio.id_prestadora.nombre_prestadora }}</td>
+                                <td>{{ servicio.fecha_ingreso|date:"d/m/Y H:i" }}</td>
+                                <td>
+                                    <span class="badge bg-{% if servicio.estado_consulta == 'ATENDIDA' %}success{% elif servicio.estado_consulta == 'PROGRAMADA' %}info{% elif servicio.estado_consulta == 'CANCELADA' %}danger{% else %}secondary{% endif %}">
+                                        {{ servicio.get_estado_consulta_display }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="{% url 'servicio_actualizar' servicio.id_encuentro_paciente %}" class="btn btn-sm btn-outline-primary" title="Editar">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a href="{% url 'servicio_eliminar' servicio.id_encuentro_paciente %}" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="bi bi-inbox" style="font-size: 3rem; color: #ccc;"></i>
+                    <p class="mt-3 text-muted">No se encontraron servicios{% if query %} que coincidan con "{{ query }}"{% endif %}.</p>
+                    <a href="{% url 'servicio_crear' %}" class="btn btn-success">
+                        <i class="bi bi-plus-circle"></i> Registrar Primer Servicio
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

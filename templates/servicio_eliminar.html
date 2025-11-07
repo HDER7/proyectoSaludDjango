@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Servicio - Sistema de Gestión de Salud{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="bi bi-exclamation-triangle text-danger"></i> Eliminar Servicio</h1>
+            <a href="{% url 'servicio_listar' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Volver
+            </a>
+        </div>
+
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0"><i class="bi bi-exclamation-circle"></i> Confirmación de Eliminación</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-danger">
+                    <strong>Advertencia:</strong> Esta acción no se puede deshacer. Se eliminará permanentemente el registro del servicio.
+                </div>
+
+                <h6 class="mb-3">¿Está seguro de que desea eliminar este servicio?</h6>
+
+                <!-- Información del Servicio -->
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <dl class="row mb-0">
+                            <dt class="col-sm-4">ID del Servicio:</dt>
+                            <dd class="col-sm-8">{{ servicio.id_encuentro_paciente }}</dd>
+
+                            <dt class="col-sm-4">Paciente:</dt>
+                            <dd class="col-sm-8">
+                                {{ servicio.id_paciente.primer_nombre }} {{ servicio.id_paciente.primer_apellido }}<br>
+                                <small class="text-muted">{{ servicio.id_paciente.numero_documento }}</small>
+                            </dd>
+
+                            <dt class="col-sm-4">Tipo de Servicio:</dt>
+                            <dd class="col-sm-8">{{ servicio.tipo_servicio }}</dd>
+
+                            <dt class="col-sm-4">Prestadora:</dt>
+                            <dd class="col-sm-8">{{ servicio.id_prestadora.nombre_prestadora }}</dd>
+
+                            <dt class="col-sm-4">Fecha de Ingreso:</dt>
+                            <dd class="col-sm-8">{{ servicio.fecha_ingreso|date:"d/m/Y H:i" }}</dd>
+
+                            {% if servicio.fecha_egreso %}
+                            <dt class="col-sm-4">Fecha de Egreso:</dt>
+                            <dd class="col-sm-8">{{ servicio.fecha_egreso|date:"d/m/Y H:i" }}</dd>
+                            {% endif %}
+
+                            <dt class="col-sm-4">Estado:</dt>
+                            <dd class="col-sm-8">
+                                <span class="badge bg-{% if servicio.estado_consulta == 'ATENDIDA' %}success{% elif servicio.estado_consulta == 'PROGRAMADA' %}info{% elif servicio.estado_consulta == 'CANCELADA' %}danger{% else %}secondary{% endif %}">
+                                    {{ servicio.get_estado_consulta_display }}
+                                </span>
+                            </dd>
+
+                            <dt class="col-sm-4">Diagnóstico:</dt>
+                            <dd class="col-sm-8">{{ servicio.diagnostico }}</dd>
+
+                            <dt class="col-sm-4">Diagnóstico CIE-10:</dt>
+                            <dd class="col-sm-8 mb-0">{{ servicio.cie_id.tipo }} - {{ servicio.cie_id.nombre }}</dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <form method="post" class="mt-4">
+                    {% csrf_token %}
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="{% url 'servicio_listar' %}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Sí, Eliminar Servicio
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
