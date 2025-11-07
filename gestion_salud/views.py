@@ -158,6 +158,12 @@ def paciente_eliminar(request, pk):
     if request.method == 'POST':
         nombre_completo = f"{paciente.primer_nombre} {paciente.primer_apellido}"
         try:
+            # Primero quitar la referencia a nacionalidad
+            paciente.id_nacionalidad = None
+            paciente.save()
+            # Luego eliminar los registros relacionados de nacionalidades
+            paciente.nacionalidades.all().delete()
+            # Finalmente eliminar el paciente
             paciente.delete()
             messages.success(request, f'Paciente {nombre_completo} eliminado exitosamente.')
             return redirect('paciente_listar')
